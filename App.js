@@ -1,4 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
+import 'react-native-gesture-handler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AppLoading from 'expo-app-loading'; 
 import {
@@ -17,12 +18,13 @@ import {
   Roboto_900Black_Italic,
 } from '@expo-google-fonts/roboto';
 
+
 import { MainLayout } from './src/screens';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Roboto_100Thin,
     Roboto_100Thin_Italic,
     Roboto_300Light,
@@ -35,7 +37,7 @@ export default function App() {
     Roboto_700Bold_Italic,
     Roboto_900Black,
     Roboto_900Black_Italic,
-  })
+  });
 
   if(!fontsLoaded){
     return <AppLoading/>

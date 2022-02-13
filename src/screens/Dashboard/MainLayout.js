@@ -48,7 +48,6 @@ const TabIndicator = ({ measureLayout, scrollX }) => {
 }
 
 const Tabs = ({ scrollX, onBottomTabPress }) => {
-
   const containerRef = useRef();
   const [measureLayout, setMeasureLayout] = useState([]);
 
