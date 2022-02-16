@@ -1,6 +1,12 @@
-import { NavigationContainer } from '@react-navigation/native';
 import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import themeReducer from './src/stores/themeReducer';
+
 import AppLoading from 'expo-app-loading'; 
 import {
   useFonts,
@@ -23,6 +29,11 @@ import { MainLayout } from './src/screens';
 
 const Stack = createNativeStackNavigator();
 
+const store = createStore(
+  themeReducer,
+  applyMiddleware(thun)
+)
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_100Thin,
@@ -44,15 +55,17 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false
-        }}
-        initialRouteName={'Dashboard'}
-      >
-        <Stack.Screen name="Dashboard" component={MainLayout}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+          initialRouteName={'Dashboard'}
+        >
+          <Stack.Screen name="Dashboard" component={MainLayout}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
