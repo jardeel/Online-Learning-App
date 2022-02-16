@@ -31,7 +31,7 @@ const Stack = createNativeStackNavigator();
 
 const store = createStore(
   themeReducer,
-  applyMiddleware(thun)
+  applyMiddleware(thunk)
 )
 
 export default function App() {

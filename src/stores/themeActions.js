@@ -18,7 +18,7 @@ export const toggleThemeFailure = error => ({
   payload: { error }
 })
 
-export function toogleTheme(themeType){
+export function toggleTheme(themeType){
   return dispatch => {
     dispatch(toggleThemeBegin())
 
