@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import { Easing } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 import { createStore, applyMiddleware } from 'redux';
@@ -28,8 +27,6 @@ import {
 
 
 import { MainLayout, CourseListing } from './src/screens';
-
-// const Stack = createNativeStackNavigator();
 
 const Stack = createSharedElementStackNavigator();
 const options = {
