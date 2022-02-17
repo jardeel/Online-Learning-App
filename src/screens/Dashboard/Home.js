@@ -163,12 +163,13 @@ const Home = () => {
           contentContainerStyle={{ marginTop: SIZES.radius }}
           renderItem={({ item, index }) => (
             <CategoryCard
+              sharedElementPrefix="Home"
               category={item}
               containerStyle={{
                 marginLeft: index == 0 ? SIZES.padding : SIZES.base,
                 marginRight: index == dummyData.categories.length - 1 ? SIZES.padding : 0
               }}
-              onPress={() => navigation.navigate("CourseListing")}
+              onPress={() => navigation.navigate("CourseListing", {category: item, sharedElementPrefix: "Home"})}
             />
           )}
         />

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { View, Text, Image, TextInput } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
 import { FlatList } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -14,6 +15,8 @@ import { TextButton, CategoryCard } from '../../components';
 import { COLORS, FONTS, SIZES, icons, dummyData } from '../../constants';
 
 const Search = () => {
+  const navigation = useNavigation();
+
   const scrollViewRef = useRef();
   const scrollY = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((event) => {
@@ -72,6 +75,7 @@ const Search = () => {
           contentContainerStyle={{ marginTop: SIZES.radius }}
           renderItem={({ item, index }) => (
             <CategoryCard
+              sharedElementPrefix="Search"
               category={item}
               containerStyle={{
                 height: 130,
@@ -79,6 +83,8 @@ const Search = () => {
                 marginTop: SIZES.radius, 
                 marginLeft: (index + 1) % 2 == 0 ? SIZES.radius : SIZES.padding
               }}
+              onPress={() => navigation.navigate("CourseListing", 
+                { category: item, sharedElementPrefix: "Search" })}
             />
           )}
         />
