@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   View, 
   Text,
@@ -35,8 +35,17 @@ import {
   dummyData
 } from '../../constants';
 
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
+
 const CourseListing = ({ navigation, route }) => {
   const { category, sharedElementPrefix } = route.params;
+
+  const flatListRef = useRef();
+  const scrollY = useSharedValue(0);
+  const onScroll = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentInset.y;
+  })
 
   const headerSharedValue = useSharedValue(80); 
 
@@ -165,9 +174,72 @@ const CourseListing = ({ navigation, route }) => {
     )
   }
 
+  function renderResults() {
+    return (
+      <AnimatedFlatList
+        ref={flatListRef}
+        data={dummyData.courses_list_2}
+        keyExtractor={item => `Results-${item.id}`}
+        contentContainerStyle={{
+          paddingHorizontal: SIZES.padding
+        }}
+        showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
+        keyboardDismissMode="on-drag"
+        onScroll={onScroll}
+        ListHeaderComponent={
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 270,
+              marginBottom: SIZES.base
+            }}
+          >
+            {/* Results */}
+            <Text style={{flex: 1, ...FONTS.body3}}>5,761 Results</Text>
+            
+            {/* Filter Button */}
+            <IconButton
+              icon={icons.filter}
+              iconStyle={{ width: 20, height: 20 }}
+              containerStyle={{
+                width: 40,
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 10,
+                backgroundColor: COLORS.primary
+              }}
+            />
+          </View>
+        }
+        renderItem={({ item, index }) => (
+          <HorizontalCourseCard
+            course={item}
+            containerStyle={{
+              marginVertical: SIZES.padding,
+              marginTop: index == 0 ? SIZES.radius : SIZES.padding
+            }}
+          />
+        )}
+        ItemSeparatorComponent={() => (
+          <LineDivider
+            lineStyle={{
+              backgroundColor: COLORS.gray20
+            }}
+          />
+        )}
+      />
+    )
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.white}}>
       
+      {/* Results */}
+      {renderResults()}
+
       {/* Header */}
       {renderHeader()}
     </View>
