@@ -182,7 +182,7 @@ const MainLayout = ({ appTheme }) => {
     return(
       <View
         style={{
-          marginBottom: SIZES.height > 800 ? 1 : 0,
+          marginBottom: SIZES.height > 800 ? 0 : 1,
           paddingHorizontal: SIZES.padding,
           paddingVertical: SIZES.radius,
           backgroundColor: appTheme?.backgroundColor1

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, ImageBackground, Image, ScrollView} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 import { 
   CategoryCard, 
@@ -42,6 +43,7 @@ const Section = ({ containerStyle, title, onPress, children }) => {
 }
 
 const Home = () => {
+  const navigation = useNavigation();
 
   function renderHeader() {
     return (
@@ -166,6 +168,7 @@ const Home = () => {
                 marginLeft: index == 0 ? SIZES.padding : SIZES.base,
                 marginRight: index == dummyData.categories.length - 1 ? SIZES.padding : 0
               }}
+              onPress={() => navigation.navigate("CourseListing")}
             />
           )}
         />

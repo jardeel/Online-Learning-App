@@ -1,6 +1,8 @@
 import 'react-native-gesture-handler';
+import { Easing } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -25,9 +27,32 @@ import {
 } from '@expo-google-fonts/roboto';
 
 
-import { MainLayout } from './src/screens';
+import { MainLayout, CourseListing } from './src/screens';
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
+
+const Stack = createSharedElementStackNavigator();
+const options = {
+  gestureEnabled: false,
+  transitionSpec: {
+    open: {
+      animation: 'timing',
+      config: {duration: 400, easing: Easing.inOut(Easing.ease)}
+    },
+    close: {
+      animation: 'timing',
+      config: {duration: 400, easing: Easing.inOut(Easing.ease)}
+    }
+  },
+  cardStyleInterpolator: ({ current: {progress }} ) => {
+    return {
+      cardStyle: {
+        opacity: progress
+      }
+    }
+  }
+}
+
 
 const store = createStore(
   themeReducer,
@@ -59,11 +84,19 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
+            useNativeDriver: true,
             headerShown: false
           }}
           initialRouteName={'Dashboard'}
+          detachInactiveScreens={false}
         >
           <Stack.Screen name="Dashboard" component={MainLayout}/>
+
+          <Stack.Screen
+            name="CourseListing"
+            component={CourseListing}
+            options={() => options}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

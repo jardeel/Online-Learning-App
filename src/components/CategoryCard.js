@@ -3,9 +3,11 @@ import { TouchableOpacity, Text, ImageBackground } from 'react-native';
 
 import { COLORS, FONTS, SIZES } from '../constants';
 
-const CategoryCard = ({ category, containerStyle }) => {
+const CategoryCard = ({ category, containerStyle, onPress }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={onPress}
+    >
       <ImageBackground
         source={category?.thumbnail}
         resizeMode="cover"
