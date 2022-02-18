@@ -51,9 +51,9 @@ const CourseListing = ({ navigation, route }) => {
 
   const headerSharedValue = useSharedValue(80); 
 
-  // function backHandler() {
-  //   navigation.goBack()
-  // }
+  function backHandler() {
+    navigation.goBack()
+  }
 
   //Render
   function renderHeader(){
@@ -106,6 +106,20 @@ const CourseListing = ({ navigation, route }) => {
       }
     )
 
+    const headerShowOnScrollAnimatedStyle = useAnimatedStyle(
+      () => {
+        return {
+          opacity: interpolate(scrollY.value, [80, 0], [1, 0], Extrapolate.CLAMP),
+          transform: [
+            {
+              translateY: interpolate(scrollY.value,
+              inputRange, [50, 130], Extrapolate.CLAMP)
+            }
+          ]
+        }
+      }
+    )
+
     return(
       <Animated.View
         style={[{
@@ -135,6 +149,25 @@ const CourseListing = ({ navigation, route }) => {
         </SharedElement>
 
         {/* Title */}
+        <Animated.View
+          style={[{
+            position: "absolute",
+            top: -80,
+            left: 0,
+            right: 0
+          },headerShowOnScrollAnimatedStyle]}
+        >
+          <Text 
+            style={{
+              textAlign: "center",
+              color: COLORS.white, 
+              ...FONTS.h2
+            }}
+          >
+            {category?.title}
+          </Text>
+        </Animated.View>
+
         <Animated.View
           style={[{
             position: "absolute",
@@ -179,7 +212,24 @@ const CourseListing = ({ navigation, route }) => {
               backgroundColor: COLORS.white
             }}
             //onPress={() => { backHandler() }}
-            onPress={() => navigate.goBack()}
+            onPress={() => {
+
+              if(scrollY.value > 0 && scrollY.value <= 200){
+                flatListRef.current?.scrollToOffset({
+                  offset: 0,
+                  animated: true
+                })
+                setTimeout(() => {
+                  headerSharedValue.value = withTiming(80, {
+                    duration: 500
+                  }, () => {
+                    runOnJS(backHandler)();
+                  })
+                }, 100)
+              } else {
+                backHandler()
+              }
+            }}
           />
         </Animated.View>
         
