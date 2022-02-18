@@ -38,13 +38,15 @@ import {
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
+const HEADER_HEIGHT = 250;
+
 const CourseListing = ({ navigation, route }) => {
   const { category, sharedElementPrefix } = route.params;
 
   const flatListRef = useRef();
   const scrollY = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((event) => {
-    scrollY.value = event.contentInset.y;
+    scrollY.value = event.contentOffset.y;
   })
 
   const headerSharedValue = useSharedValue(80); 
@@ -55,6 +57,7 @@ const CourseListing = ({ navigation, route }) => {
 
   //Render
   function renderHeader(){
+    const inputRange = [0, HEADER_HEIGHT - 50];
 
     headerSharedValue.value = withDelay(500, 
       withTiming(0, {
@@ -80,16 +83,39 @@ const CourseListing = ({ navigation, route }) => {
       }
     )
 
+    const headerHeightAnimatedStyle = useAnimatedStyle(
+      () => {
+        return {
+          height: interpolate(scrollY.value, inputRange, 
+          [HEADER_HEIGHT, 120], Extrapolate.CLAMP)
+        }
+    })
+
+    const headerHideOnScrollAnimatedStyle = useAnimatedStyle(
+      () => {
+        return {
+          opacity: interpolate(scrollY.value, [80, 0],
+          [0, 1], Extrapolate.CLAMP),
+          transform: [
+            {
+              translateY: interpolate(scrollY.value, 
+              inputRange, [0, 200], Extrapolate.CLAMP)
+            }
+          ]
+        }
+      }
+    )
+
     return(
       <Animated.View
-        style={{
+        style={[{
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           height: 250,
           overflow: "hidden"
-        }}
+        }, headerHeightAnimatedStyle]}
       >
         {/* Background Image */}
 
@@ -110,11 +136,11 @@ const CourseListing = ({ navigation, route }) => {
 
         {/* Title */}
         <Animated.View
-          style={{
+          style={[{
             position: "absolute",
             bottom: 70, 
             left: 30
-          }}
+          }, headerHideOnScrollAnimatedStyle]}
         >
           <SharedElement
             id={`${sharedElementPrefix}-CategoryCard-Title-${category?.id}`}
@@ -167,7 +193,9 @@ const CourseListing = ({ navigation, route }) => {
             bottom: -40,
             width: 100,
             height: 200
-          }, headerFadeAnimatedStyle, headerTranslateAnimatedStyle]}
+          }, headerFadeAnimatedStyle, 
+          headerTranslateAnimatedStyle, 
+          headerHideOnScrollAnimatedStyle]}
         />
 
       </Animated.View>
