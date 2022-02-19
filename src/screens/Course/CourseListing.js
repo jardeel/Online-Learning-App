@@ -23,7 +23,8 @@ import { SharedElement } from 'react-native-shared-element';
 import {
   IconButton,
   HorizontalCourseCard,
-  LineDivider
+  LineDivider,
+  FilterModal
 } from '../../components';
 
 import {
@@ -320,6 +321,9 @@ const CourseListing = ({ navigation, route }) => {
 
       {/* Header */}
       {renderHeader()}
+
+      {/* FilterModal */}
+      <FilterModal />
     </View>
   )
 }

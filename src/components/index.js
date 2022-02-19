@@ -2,6 +2,7 @@ import CategoryCard from "./CategoryCard";
 import HorizontalCourseCard from "./HorizontalCourseCard";
 import IconButton from "./IconButton";
 import IconLabel from "./IconLabel";
+import FilterModal from "./FilterModal";
 import LineDivider from "./LineDivider";
 import ProfileRadioButton from "./ProfileRadioButton";
 import ProfileValue from "./ProfileValue";
@@ -13,6 +14,7 @@ export {
   CategoryCard,
   HorizontalCourseCard,
   IconButton,
+  FilterModal,
   IconLabel,
   LineDivider,
   ProfileRadioButton,
