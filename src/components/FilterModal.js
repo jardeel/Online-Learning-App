@@ -14,7 +14,7 @@ import Animated, {
   withTiming
 } from 'react-native-reanimated';
 
-import { TextButton, LineDivider } from '../components';
+import { TextButton, LineDivider, TwoPointSlider } from '../components';
 import { COLORS, FONTS, SIZES, icons, constants } from '../constants';
 
 const ClassTypeOption = ({ containerStyle, classType, isSelected, onPress }) => {
@@ -126,6 +126,44 @@ filterModalSharedValueTwo }) => {
     }
   )
 
+  function renderFooter() {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          height: 50,
+          marginBottom: 30,
+          paddingHorizontal: SIZES.padding
+        }}
+      >
+        {/* Reset */}
+        <TextButton
+          label="Reset"
+          contentContainerStyle={{
+            flex: 1,
+            borderRadius: SIZES.radius,
+            borderWidth: 1,
+            backgroundColor: null
+          }}
+          labelStyle={{ color: COLORS.black, ...FONTS.h3b }}
+        />
+
+        {/* Apply */}
+        <TextButton
+          label="Apply"
+          contentContainerStyle={{
+            flex: 1,
+            marginLeft: SIZES.radius,
+            borderRadius: SIZES.radius,
+            borderWidth: 2,
+            borderColor: COLORS.primary,
+            backgroundColor: COLORS.primary
+          }}
+          labelStyle={{ color: COLORS.white, ...FONTS.h3b }}
+        />
+      </View>
+    )
+  }
 
   return (
     // Main Container
@@ -272,7 +310,26 @@ filterModalSharedValueTwo }) => {
               </View>
             </View>
 
+            {/* Class Length */}
+            <View style={{ marginTop: SIZES.padding }}>
+              <Text style={{ ...FONTS.h3b }}>
+                Created Within
+              </Text>
+
+              <View style={{ alignItems: 'center' }}>
+                <TwoPointSlider
+                  values={[20,50]}
+                  min={15}
+                  max={60}
+                  postfix="min"
+                  onValuesChange={(values) => console.log(values)}
+                />
+              </View>
+            </View>
           </ScrollView>
+
+          {/* Footer */}
+          {renderFooter()}
         </Animated.View>
       </Animated.View>
     </Animated.View>
