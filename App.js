@@ -26,7 +26,7 @@ import {
 } from '@expo-google-fonts/roboto';
 
 
-import { MainLayout, CourseListing } from './src/screens';
+import { MainLayout, CourseListing, CourseDetails } from './src/screens';
 
 const Stack = createSharedElementStackNavigator();
 const options = {
@@ -93,6 +93,11 @@ export default function App() {
             name="CourseListing"
             component={CourseListing}
             options={() => options}
+          />
+
+          <Stack.Screen
+            name="CourseDetails"
+            component={CourseDetails}
           />
         </Stack.Navigator>
       </NavigationContainer>

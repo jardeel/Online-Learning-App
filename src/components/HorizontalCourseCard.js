@@ -4,9 +4,9 @@ import { View, Text, Image, ImageBackground, TouchableOpacity } from 'react-nati
 import { IconLabel } from '../components';
 import { SIZES, COLORS, FONTS, icons } from '../constants';
 
-const HorizontalCourseCard = ({ containerStyle, course }) => {
+const HorizontalCourseCard = ({ containerStyle, course, onPress }) => {
   return (
-    <TouchableOpacity style={{ flexDirection: 'row', ...containerStyle }}>
+    <TouchableOpacity style={{ flexDirection: 'row', ...containerStyle }} onPress={onPress}>
       {/* Thumbnail */}
       <ImageBackground
         source={course.thumbnail}
