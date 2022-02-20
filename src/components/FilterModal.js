@@ -55,6 +55,34 @@ const ClassTypeOption = ({ containerStyle, classType, isSelected, onPress }) => 
   )
 }
 
+const ClassLevelOption = ({ containerStyle, classLevel, isLastItem, isSelected, onPress }) => {
+  return (
+    <>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          height: 50,
+          alignItems: 'center',
+          ...containerStyle
+        }}
+        onPress={onPress}
+      >
+        <Text style={{flex: 1, ...FONTS.body3}}>
+          {classLevel.label}
+        </Text>
+
+        <Image
+          source={isSelected ? icons.checkbox_on : icons.checkbox_off}
+          resizeMode="contain"
+          style={{ width: 20, height: 20 }}
+        />
+      </TouchableOpacity>
+
+      {isLastItem && <LineDivider lineStyle={{ height: 1 }} />}
+    </>
+  )
+}
+
 const FilterModal = ({ 
 filterModalSharedValueOne, 
 filterModalSharedValueTwo }) => {
@@ -192,8 +220,27 @@ filterModalSharedValueTwo }) => {
               </View>
             </View>
 
-          </ScrollView>
+            {/* Class Level */}
+            <View style={{ marginTop: SIZES.padding }}>
+              <Text style={{...FONTS.h3b}}>
+                Class Level
+              </Text>
+              <View>
+                {constants.class_levels.map((item, index) => {
+                  return (
+                    <ClassLevelOption
+                      key={`ClassType-${index}`}
+                      classLevel={item}
+                      isLastItem={index == constants.class_levels.length - 1}
+                      isSelected={selectedClassLevel == item?.id}
+                      onPress={() => {setSelectedClassLevel(item.id)}}
+                    />
+                  )
+                })}
+              </View>
+            </View>
 
+          </ScrollView>
         </Animated.View>
       </Animated.View>
     </Animated.View>
