@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   View,
   Text,
@@ -17,9 +17,51 @@ import Animated, {
 import { TextButton, LineDivider } from '../components';
 import { COLORS, FONTS, SIZES, icons, constants } from '../constants';
 
+const ClassTypeOption = ({ containerStyle, classType, isSelected, onPress }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        flex: 1,
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: SIZES.radius,
+        borderRadius: SIZES.radius,
+        backgroundColor: isSelected ? COLORS.primary3 : COLORS.additionalColor9,
+        ...containerStyle
+      }}
+      onPress={onPress}
+    >
+      <Image 
+        source={classType.icon}
+        resizeMode="contain"
+        style={{
+          width: 40,
+          height: 40,
+          tintColor: isSelected ? COLORS.white : COLORS.gray80
+        }}
+      />
+
+      <Text
+        style={{ 
+          marginTop: SIZES.base,
+          color: isSelected ? COLORS.white : COLORS.gray80,
+          ...FONTS.h3
+        }}
+      >
+        {classType.label}
+      </Text>
+    </TouchableOpacity>
+  )
+}
+
 const FilterModal = ({ 
 filterModalSharedValueOne, 
 filterModalSharedValueTwo }) => {
+
+  const [selectedClassType, setSelectedClassType] = useState("");
+  const [selectedClassLevel, setSelectedClassLevel] = useState("");
+  const [selectedCreateWithin, setSelectedCreateWithin] = useState("");
 
   const filterModalContainerAnimatedStyle = useAnimatedStyle(
     () => {
@@ -89,9 +131,70 @@ filterModalSharedValueTwo }) => {
             backgroundColor: COLORS.white
           }, filterModalContentAnimatedStyle]}
         > 
+          {/* Header */}
+          <View
+            style={{
+              marginTop: SIZES.padding,
+              flexDirection: 'row',
+              paddingHorizontal: SIZES.padding
+            }}
+          >
+            <View style={{width: 60}} />
+            <Text
+              style={{ flex: 1, textAlign: 'center', ...FONTS.h1}}
+            >
+              Filter
+            </Text>
+
+            <TextButton
+              label="Cancel"
+              contentContainerStyle={{ width: 60, backgroundColor: null }}
+              labelStyle={{ color: COLORS.black, ...FONTS.body3}}
+              onPress={() => {
+                filterModalSharedValueTwo.value = withTiming(SIZES.height, {
+                  duration: 500
+                })
+
+                filterModalSharedValueOne.value = withDelay(500, withTiming(
+                  SIZES.height, { duration: 100 }
+                ))
+              }}
+            />
+          </View>
+
+          {/* Content */}
+          <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: SIZES.padding,
+              paddingBottom: 50
+            }}
+          >
+            {/* Class Type */}
+            <View style={{ marginTop: SIZES.radius }}>
+              <Text style={{ ...FONTS.h3b }}>Class Type</Text>
+
+              <View style={{flexDirection: 'row', marginTop: SIZES.radius}}>
+                {constants.class_types.map((item, index) => {
+                  return (
+                    <ClassTypeOption
+                      key={`ClassType-${index}`}
+                      classType={item}
+                      isSelected={selectedClassType == item?.id}
+                      containerStyle={{
+                        marginLeft: index == 0 ? 0 : SIZES.base
+                      }}
+                      onPress={() => {
+                        setSelectedClassType(item.id)
+                      }}
+                    />
+                  )
+                })}
+              </View>
+            </View>
+
+          </ScrollView>
 
         </Animated.View>
-
       </Animated.View>
     </Animated.View>
   )
