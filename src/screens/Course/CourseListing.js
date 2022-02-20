@@ -51,6 +51,8 @@ const CourseListing = ({ navigation, route }) => {
   })
 
   const headerSharedValue = useSharedValue(80); 
+  const filterModalSharedValueOne = useSharedValue(SIZES.height);
+  const filterModalSharedValueTwo = useSharedValue(SIZES.height);
 
   function backHandler() {
     navigation.goBack()
@@ -290,6 +292,14 @@ const CourseListing = ({ navigation, route }) => {
                 borderRadius: 10,
                 backgroundColor: COLORS.primary
               }}
+              onPress={() => {
+                filterModalSharedValueOne.value = withTiming(0, {
+                  duration: 100
+                })
+                filterModalSharedValueTwo.value = withDelay(100, withTiming(0, {
+                  duration: 500
+                }))
+              }}
             />
           </View>
         }
@@ -323,7 +333,10 @@ const CourseListing = ({ navigation, route }) => {
       {renderHeader()}
 
       {/* FilterModal */}
-      <FilterModal />
+      <FilterModal 
+        filterModalSharedValueOne={filterModalSharedValueOne}
+        filterModalSharedValueTwo={filterModalSharedValueTwo}
+      />
     </View>
   )
 }
