@@ -13,6 +13,8 @@ import {
   dummyData
 } from "../../constants";
 
+import CourseChapters from './CourseTabs/CourseChapters';
+
 const course_details_tabs = constants.course_details_tabs.map((course_details_tab) => ({
   ...course_details_tab,
   ref: createRef()
@@ -260,7 +262,7 @@ const CourseDetails = ({ navigation, route }) => {
               right: 0,
               backgroundColor: COLORS.black
             }}
-            source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+            source={{ uri: dummyData.sample_video_url }}
             useNativeControls
             resizeMode="contain"
             isLooping
@@ -304,7 +306,7 @@ const CourseDetails = ({ navigation, route }) => {
           renderItem={({ item, index }) => {
             return (
               <View style={{width: SIZES.width}}>
-                {index == 0 && <Text>Chapters</Text>}
+                {index == 0 && <CourseChapters />}
                 {index == 1 && <Text>Files</Text>}
                 {index == 2 && <Text>Discussions</Text>}
               </View>

@@ -160,7 +160,7 @@ const course_details = {
       title: '2. User Interface',
       duration: '1:15:00',
       size: '200 MB',
-      progress: '100%',
+      progress: '60%',
       is_playing: true,
       is_complete: false,
       is_lock: false,
@@ -353,6 +353,8 @@ const notificationByDays = [
   },
 ];
 
+const sample_video_url = "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4";
+
 export default {
   categories,
   courses_list_1,
@@ -360,4 +362,5 @@ export default {
   top_searches,
   course_details,
   notificationByDays,
+  sample_video_url
 };

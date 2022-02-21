@@ -71,6 +71,8 @@ export const FONTS = {
   body4t: {fontFamily: 'Roboto_700Bold', fontSize: SIZES.body4, lineHeight: 18},
   h3b: {fontFamily: 'Roboto_900Black', fontSize: SIZES.body3, lineHeight: 20},
 
+  h2b: {fontFamily: 'Roboto_900Black', fontSize: SIZES.h2, lineHeight: 30},
+
 };
 
 export const darkTheme = {
