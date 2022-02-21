@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, Animated, Keyboard } from 'react-native';
+// import Video from 'react-native-video';
+import { Video } from 'expo-av';
 
 import {IconButton, LineDivider} from "../../components";
 import {
@@ -14,6 +16,8 @@ import {
 const CourseDetails = ({ navigation, route }) => {
 
   const { selectedCourse } = route.params;
+  const [playVideo, setPlayVideo] = useState(false);
+  const video = useRef(null);
 
   function renderHeaderComponents() {
     return (
@@ -64,21 +68,38 @@ const CourseDetails = ({ navigation, route }) => {
   }
 
   function renderHeader() {
-    return (
-      <View
-        style={{
-          position: "absolute",
-          top: SIZES.height > 800 ? 40 : 20,
-          left: 0,
-          right: 0,
-          flexDirection: 'row',
-          paddingHorizontal: SIZES.padding,
-          zIndex: 1
-        }}
-      >
-        {renderHeaderComponents()}
-      </View>
-    )
+    if(playVideo) {
+      return (
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: SIZES.radius,
+            paddingBottom: SIZES.base,
+            height: 85,
+            backgroundColor: COLORS.black,
+            alignItems: "flex-end",
+          }}
+        >
+          {renderHeaderComponents()}
+        </View>
+      )
+    }else {
+      return (
+        <View
+          style={{
+            position: "absolute",
+            top: SIZES.height > 800 ? 40 : 20,
+            left: 0,
+            right: 0,
+            flexDirection: 'row',
+            paddingHorizontal: SIZES.padding,
+            zIndex: 1
+          }}
+        >
+          {renderHeaderComponents()}
+        </View>
+      )
+    }
   }
 
   function renderVideoSection(){
@@ -118,9 +139,26 @@ const CourseDetails = ({ navigation, route }) => {
               borderRadius: 30,
               backgroundColor: COLORS.primary
             }}
+            onPress={() => setPlayVideo(true)}
           />
-
         </ImageBackground>
+        {playVideo && 
+          <Video 
+            ref={video}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              backgroundColor: COLORS.black
+            }}
+            source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+            useNativeControls
+            resizeMode="contain"
+            isLooping
+          />
+        }
       </View>
     )
   }
