@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text,
@@ -64,6 +64,24 @@ const CommentSection = ({commentItem, commentOption, replies}) => {
 }
 
 const CourseDiscussions = () => {
+  const [footerPosition, setFooterPosition] = useState(0);
+  const [footerHeight, setFooterHeight] = useState(60);
+
+  useEffect(() => {
+    //Listen to the Keyboard
+    const showSubscription = Keyboard.addListener("keyboardWillShow", (e) => {
+      setFooterPosition(e.endCoordinates.height)
+    })
+
+    const hideSubscription = Keyboard.addListener("keyboardWillHide", (e) => {
+      setFooterPosition(0)
+    })
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    }
+  },[]);
 
   function renderDiscussions() {
     return (
@@ -196,6 +214,62 @@ const CourseDiscussions = () => {
     )
   }
 
+  function renderFooterTextInput() {
+    return(
+      <View
+        style={{
+          flexDirection: 'row',
+          position: 'absolute',
+          bottom: footerPosition,
+          left: 0,
+          right: 0,
+          height: footerHeight, // colocar de acordo do o sistema
+          paddingHorizontal: SIZES.padding,
+          paddingVertical: SIZES.radius,
+          backgroundColor: COLORS.gray10
+        }}
+      >
+        <TextInput
+          style={{
+            flex: 1,
+            marginRight: SIZES.base,
+            ...FONTS.body3
+          }}
+          multiline
+          placeholder="Type Something"
+          placeholderTextColor={COLORS.gray80}
+          onContentSizeChange={(event) => {
+            const height = event.nativeEvent.contentSize.height
+
+            if(height <= 60){
+              setFooterHeight(60)
+            } else if (height > 60 && height <= 100){
+              setFooterHeight(height)
+            } else if(height > 100){
+              setFooterHeight(100)
+            }
+          }}
+        />
+
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <IconButton
+            icon={icons.send}
+            iconStyle={{
+              height: 25,
+              width: 25, 
+              tintColor: COLORS.primary
+            }}
+          />
+        </View>
+      </View>
+    )
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       
@@ -203,6 +277,7 @@ const CourseDiscussions = () => {
       {renderDiscussions()}
 
       {/* Footer */}
+      {renderFooterTextInput()}
     </View>
   )
 }

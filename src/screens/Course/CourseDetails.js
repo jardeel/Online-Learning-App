@@ -102,7 +102,10 @@ const Tabs = ({ scrollX, onTabPress }) => {
               alignItems: 'center',
               justifyContent: 'center'
             }}
-            onPress={() => {onTabPress(index)}}
+            onPress={() => {
+              Keyboard.dismiss()
+              onTabPress(index)
+            }}
           >
             <Text style={{...FONTS.h3b, fontSize: SIZES.height > 800 ? 16 : 15}}>
               {item.label}
