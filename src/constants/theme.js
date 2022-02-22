@@ -52,7 +52,7 @@ export const SIZES = {
 
   // app dimensions
   width,
-  height,
+  height, 
 };
 export const FONTS = {
   largeTitle: {fontFamily: 'Roboto_900Black', fontSize: SIZES.largeTitle},
@@ -72,6 +72,8 @@ export const FONTS = {
   h3b: {fontFamily: 'Roboto_900Black', fontSize: SIZES.body3, lineHeight: 20},
 
   h2b: {fontFamily: 'Roboto_900Black', fontSize: SIZES.h2, lineHeight: 30},
+  body3b: {fontFamily: 'Roboto_900Black', fontSize: SIZES.body3, lineHeight: 22},
+  h4b: {fontFamily: 'Roboto_900Black', fontSize: SIZES.h4, lineHeight: 22},
 
 };
 

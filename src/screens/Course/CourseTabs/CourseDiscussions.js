@@ -8,7 +8,7 @@ import {
   Image
 } from 'react-native';
 
-import { IconButton } from '../../../components';
+import { IconButton, IconLabelButton } from '../../../components';
 import {
   COLORS, 
   FONTS,
@@ -36,6 +36,26 @@ const CommentSection = ({commentItem, commentOption, replies}) => {
       />
 
       {/* Name & Comment */}
+      <View
+        style={{
+          flex: 1,
+          marginTop: 3,
+          marginLeft: SIZES.radius
+        }}
+      >
+        {/* Name */}
+        <Text style={{ ...FONTS.h3b }}>
+          {commentItem?.name}
+        </Text>
+
+        {/* Comment */}
+        <Text>
+          {commentItem?.comment}
+        </Text>
+
+        {/* Comment Options */}
+        {commentOption}
+      </View>
     </View>
   )
 }
@@ -55,7 +75,57 @@ const CourseDiscussions = () => {
           renderItem={({ item, index }) => (
             <CommentSection
               commentItem={item}
-              //commentOption
+              commentOption={
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: SIZES.radius,
+                    paddingVertical: SIZES.base,
+                    borderTopWidth: 1,
+                    borderBottomWidth: 1,
+                    borderColor: COLORS.gray20
+                  }}
+                >
+                  {/* Comment */}
+                  <IconLabelButton
+                    icon={icons.comment}
+                    label={item?.no_of_comments}
+                    iconStyle={{
+                      tintColor: COLORS.black 
+                    }}
+                    labelStyle={{
+                      marginLeft: 3, 
+                      color: COLORS.black,
+                      ...FONTS.h4b
+                    }} 
+                  />
+
+                  {/* Like */}
+                  <IconLabelButton
+                    icon={icons.heart}
+                    label={item?.no_of_likes}
+                    containerStyle={{
+                      marginLeft: SIZES.radius
+                    }}
+                    labelStyle={{
+                      marginLeft: 3, 
+                      color: COLORS.black,
+                      ...FONTS.h4b
+                    }}
+                  />
+
+                  {/* Date */}
+                  <Text
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      ...FONTS.h4
+                    }}
+                  >
+                    {item?.posted_on}
+                  </Text>
+                </View>
+              }
               //replies
             />
           )}
