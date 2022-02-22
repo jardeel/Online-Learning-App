@@ -15,6 +15,7 @@ import {
 
 import CourseChapters from './CourseTabs/CourseChapters';
 import CourseFiles from './CourseTabs/CourseFiles';
+import CourseDiscussions from './CourseTabs/CourseDiscussions';
 
 const course_details_tabs = constants.course_details_tabs.map((course_details_tab) => ({
   ...course_details_tab,
@@ -309,7 +310,7 @@ const CourseDetails = ({ navigation, route }) => {
               <View style={{width: SIZES.width}}>
                 {index == 0 && <CourseChapters />}
                 {index == 1 && <CourseFiles />}
-                {index == 2 && <Text>Discussions</Text>}
+                {index == 2 && <CourseDiscussions />}
               </View>
             )
           }}
