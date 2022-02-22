@@ -55,6 +55,9 @@ const CommentSection = ({commentItem, commentOption, replies}) => {
 
         {/* Comment Options */}
         {commentOption}
+
+        {/* Replies Section */}
+        {replies}
       </View>
     </View>
   )
@@ -126,7 +129,66 @@ const CourseDiscussions = () => {
                   </Text>
                 </View>
               }
-              //replies
+              replies={
+                <FlatList
+                  data={item?.replies}
+                  scrollEnabled={false}
+                  keyExtractor={item => `Discussions-replies-${item.id}`}
+                  renderItem={({ item, index }) => (
+                    <CommentSection
+                      commentItem={item}
+                      commentOption={
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginTop: SIZES.radius,
+                            paddingVertical: SIZES.base,
+                            borderTopWidth: 1, 
+                            borderBottomWidth: 1,
+                            borderColor: COLORS.gray20
+                          }}
+                        >
+                          {/* Reply */}
+                          <IconLabelButton
+                            icon={icons.reply}
+                            label="Reply"
+                            labelStyle={{
+                              marginLeft: 5,
+                              color: COLORS.black,
+                              ...FONTS.h4b
+                            }}
+                          />
+
+                          {/* Like */}
+                          <IconLabelButton
+                            icon={icons.heart_off}
+                            label="Like"
+                            containerStyle={{
+                              marginLeft: SIZES.radius
+                            }}
+                            labelStyle={{
+                              marginLeft: 3,
+                              color: COLORS.black,
+                              ...FONTS.h4b
+                            }}
+                          />
+
+                          {/* Date */}
+                          <Text
+                            style={{
+                              flex: 1,
+                              textAlign: 'right',
+                              ...FONTS.h4
+                            }}
+                          >
+                            {item?.posted_on}
+                          </Text>
+                        </View>
+                      }
+                    />
+                  )}
+                />
+              }
             />
           )}
         />
